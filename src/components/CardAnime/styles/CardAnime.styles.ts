@@ -1,5 +1,6 @@
 
 export const CardContainerStyles: React.CSSProperties = {
+    backgroundColor: "#e3e3e3",
     border: "1px solid #2f353a",
     borderRadius: "10px 10px 0px 0px",
     position: "relative",
@@ -28,4 +29,11 @@ export const TitleAnimeStyles: React.CSSProperties = {
     margin: "5px",
     color: "#e0e5e9",
     height: "250px",
+}
+
+export const ScoreAnimeStyles: React.CSSProperties = {
+    padding: "0px 4px", 
+    display: "flex", 
+    flexDirection: "row", 
+    justifyContent: "space-between",
 }
