@@ -12,18 +12,27 @@ export const useDashboard = () => {
         const responseBody = await response.json();
         const arrayPromises = responseBody.data.map(
             (anime: {title: string, mal_id: string}) => {
-                syncDelay(370);
+                syncDelay(400);
                 const urlAnime = `https://api.jikan.moe/v4/anime/${anime.mal_id}`;
                 return fetch(urlAnime);
             }
         );
         
-        const arrayRespuestasDePromises = await Promise.all(
-            (
-                await Promise.all(arrayPromises)
-            ).map(async (response) => await response.json())
-        );
-        setAnimeList(arrayRespuestasDePromises);
+        const arrayRespuestasDePromises = (
+        await Promise.allSettled(arrayPromises)
+        // @ts-ignore
+        ).map((el) => el.value);
+
+        const resultsFromAllSettled = (
+        await Promise.allSettled(
+            arrayRespuestasDePromises.map(async (el) => await el.json())
+        )
+        // @ts-ignore
+        ).map((el) => el.value);
+
+        console.log("termino de cargar ", resultsFromAllSettled);
+
+        setAnimeList(resultsFromAllSettled);
         };
 
         getAnimes();
